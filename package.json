@@ -12,7 +12,9 @@
   },
   "scripts": {
     "start": "npx nullstack start",
-    "build": "npx nullstack build --mode=ssr"
+    "build": "npx nullstack build --mode=ssr",
+    "dev-node": "docker run -p 8545:8545 -p 1337:1337 trufflesuite/ganache-cli:latest --accounts 10 --debug",
+    "deploy-contracts": "hardhat run scripts/deploy.js --network localhost"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
