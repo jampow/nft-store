@@ -42,6 +42,23 @@ describe("NFT Market", function() {
       })
     )
 
-    console.log('items: ', items)
+    console.log('store items: ', items)
+
+    const itemsBought = await market.connect(buyerAddress).fetchMyNFTs()
+
+    const readableItemsBought = await Promise.all(
+      itemsBought.map(async i => {
+        const tokenUri = await nft.tokenURI(i.tokenId)
+        return {
+          price: i.price.toString(),
+          tokenId: i.tokenId.toString(),
+          seller: i.seller,
+          owner: i.owner,
+          tokenUri
+        }
+      })
+    )
+
+    console.log('items bought', readableItemsBought)
   });
 });

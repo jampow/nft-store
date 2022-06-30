@@ -1,5 +1,6 @@
 import Nullstack from 'nullstack';
 import Pictures from './pictures';
+import Assets from './assets';
 
 class Admin extends Nullstack {
 
@@ -9,7 +10,10 @@ class Admin extends Nullstack {
 
   render() {
     return (
-      <Pictures route="/admin/pictures/*" />
+      <>
+        <Pictures route="/admin/pictures/*" />
+        <Assets route="/admin/assets/*" />
+      </>
     )
   }
 
