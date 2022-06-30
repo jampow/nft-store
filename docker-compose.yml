@@ -1,0 +1,16 @@
+version: '3.2'
+services:
+  ipfs:
+    image: ipfs/go-ipfs:latest
+    container_name: ipfs
+    volumes:
+    #- "./export:/export"
+    #- "./data/ipfs:/data/ipfs"
+    - "./docker/ipfs-cors.sh:/cors.sh"
+    - "./docker/start_ipfs.sh:/start_ipfs.sh"
+    ports:
+    - "5001:5001"
+    - "4001:4001"
+    - "8080:8080"
+    entrypoint: /bin/sh
+    command: /start_ipfs.sh

@@ -1,5 +1,6 @@
 import Nullstack from 'nullstack';
 import List from './list';
+import Create from './create';
 
 class Admin extends Nullstack {
 
@@ -7,6 +8,7 @@ class Admin extends Nullstack {
     return (
       <>
         <List route='/admin/pictures/list' />
+        <Create route='/admin/pictures/create' />
       </>
     )
   }

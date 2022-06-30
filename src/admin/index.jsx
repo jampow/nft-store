@@ -7,24 +7,9 @@ class Admin extends Nullstack {
     page.locale = 'pt-BR';
   }
 
-  renderHead() {
-    return (
-      <head>
-        <link
-          href="https://fonts.gstatic.com" rel="preconnect" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Crete+Round&family=Roboto&display=swap"
-          rel="stylesheet" />
-      </head>
-    )
-  }
-
   render() {
     return (
-      <main>
-        <Head />
-        <Pictures route="/admin/pictures/*" />
-      </main>
+      <Pictures route="/admin/pictures/*" />
     )
   }
 
