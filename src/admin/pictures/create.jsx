@@ -99,7 +99,7 @@ class CreatePicture extends Nullstack {
           />
           {this.fileUrl && <img src={this.fileUrl} />}
           <button
-            className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+            class="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
             onclick={this.createItem}
           >
             Create asset

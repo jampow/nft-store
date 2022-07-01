@@ -76,13 +76,13 @@ class List extends Nullstack {
                 <div class="border shadow rounded-xl overflow-hidden">
                   <img src={nft.image} class="rounded" />
                   <div class="p-4 bg-black">
-                    <p className="text-2xl font-semiboldy">{nft.name}</p>
-                    <div className="overflow-hidden">
+                    <p class="text-2xl font-semiboldy">{nft.name}</p>
+                    <div class="overflow-hidden">
                       <p class="text-gray-400">{nft.description}</p>
                     </div>
                   </div>
-                  <div className="p-4 bg-black">
-                    <p className="text-2xl mb-4 font-bold text-white">Price: {nft.price} ETH</p>
+                  <div class="p-4 bg-black">
+                    <p class="text-2xl mb-4 font-bold text-white">Price: {nft.price} ETH</p>
                   </div>
                 </div>
               ))
