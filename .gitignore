@@ -14,3 +14,4 @@ typechain
 cache
 artifacts
 config.js
+public/output.css
