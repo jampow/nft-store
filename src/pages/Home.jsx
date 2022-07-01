@@ -13,7 +13,10 @@ class Home extends Nullstack {
     return (
       <>
         <Topbar />
-        <NFTS />
+        <div class="w-full">
+          <h2 class="text-xl font-bold">Trending NFTs</h2>
+          <NFTS />
+        </div>
       </>
     )
   }

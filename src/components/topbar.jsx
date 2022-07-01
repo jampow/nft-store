@@ -16,7 +16,7 @@ class Topbar extends Nullstack {
 
   render() {
     return (
-      <nav class="w-full flex justify-between">
+      <nav class="w-full flex justify-between pb-8">
 
         <div class="flex flex-col">
           <span class='text-xs font-bold text-center'> NFTS FOR </span>

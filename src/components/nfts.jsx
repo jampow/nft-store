@@ -62,15 +62,14 @@ class Nfts extends Nullstack {
     )
   }
 
-  render() {
+  render({ filter = '' }) {
     return (
-      <div class="w-full">
-        <h2 class="font-bold">Trending NFTs</h2>
-        <div class="grid grid-cols-4 gap-4 p-4 mt-2">
-          {
-            this.nfts.map(nft => (<Nft data={nft} />))
-          }
-        </div>
+      <div class="grid grid-cols-4 gap-4 p-4 mt-2">
+        {
+          this.nfts
+            .filter(nft => (nft.name.indexOf(filter) > -1 || nft.description.indexOf(filter) > -1 || nft.price.toString().indexOf(filter) > -1))
+            .map(nft => (<Nft data={nft} />))
+        }
       </div>
     )
   }
