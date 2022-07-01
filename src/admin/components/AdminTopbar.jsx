@@ -4,12 +4,13 @@ class AdminTopbar extends Nullstack {
 
   renderLink({ href, children, router }) {
     let selectedClass = ''
-    if (router.path === href) {
+    const finalLink = `/admin${href}`
+    if (router.path === finalLink) {
       selectedClass = 'border-yellow-400 border-b-2'
     }
     return (
       <li class='px-4'>
-        <a href={`/admin${href}`} class={`${selectedClass} pb-2`}>{children}</a>
+        <a href={finalLink} class={`${selectedClass} pb-2`}>{children}</a>
       </li>
     )
   }
