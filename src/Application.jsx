@@ -26,11 +26,11 @@ class Application extends Nullstack {
 
   render() {
     return (
-      <main>
+      <body class='bg-black text-white'>
         <Head />
         <Home route="/" />
         <Admin route="/admin/*" />
-      </main>
+      </body>
     )
   }
 
