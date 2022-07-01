@@ -1,6 +1,7 @@
 import Nullstack from 'nullstack';
 import Pictures from './pictures';
 import Assets from './assets';
+import AdminTopbar from './components/AdminTopbar'
 
 class Admin extends Nullstack {
 
@@ -11,6 +12,7 @@ class Admin extends Nullstack {
   render() {
     return (
       <>
+        <AdminTopbar />
         <Pictures route="/admin/pictures/*" />
         <Assets route="/admin/assets/*" />
       </>

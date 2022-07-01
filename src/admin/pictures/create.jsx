@@ -75,31 +75,36 @@ class CreatePicture extends Nullstack {
         <div class="w-1/2 flex flex-col pb-12">
           <input
             placeholder="name"
-            class="mt-8 border rounded p-4"
+            class="mt-8 border p-4 bg-black focus:outline-none border-0 border-b-white border-b-2"
             type="text"
             bind={this.name}
           />
           <textarea
             placeholder="description"
-            class="mt-2 border rounded p-4"
+            class="mt-2 border p-4 bg-black focus:outline-none border-0 border-b-white border-b-2"
             type="text"
             bind={this.description}
           />
           <input
             placeholder="price in Ether"
-            class="mt-2 border rounded p-4"
+            class="mt-2 border p-4 bg-black focus:outline-none border-0 border-b-white border-b-2"
             type="text"
             bind={this.price}
           />
           <input
             placeholder="file"
-            class="my-4"
+            class="block w-full text-sm text-gray-400
+              file:mt-4 file:mr-4 file:py-2 file:px-4
+              file:border-0 
+              file:text-sm file:font-semibold
+              file:bg-black file:text-yellow-500
+              hover:file:cursor-pointer"
             type="file"
             onchange={this.onChange}
           />
           {this.fileUrl && <img src={this.fileUrl} />}
           <button
-            class="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+            class="font-bold mt-4 bg-yellow-500 text-black p-4 shadow-lg"
             onclick={this.createItem}
           >
             Create asset

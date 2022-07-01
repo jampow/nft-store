@@ -1,6 +1,7 @@
 import Nullstack from 'nullstack';
 import Home from './pages/Home';
 import Explore from './pages/Explore'
+import Taps from './pages/Taps';
 import Admin from './admin';
 
 class Application extends Nullstack {
@@ -30,6 +31,7 @@ class Application extends Nullstack {
         <Head />
         <Home route="/" />
         <Explore route="/explore" />
+        <Taps route="/taps" />
         <Admin route="/admin/*" />
       </main>
     )

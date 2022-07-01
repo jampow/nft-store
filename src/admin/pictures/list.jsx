@@ -75,7 +75,7 @@ class List extends Nullstack {
                     </div>
                     <div class="p-4 bg-black">
                       <p class="text-2xl mb-4 font-bold text-white">{nft.price} ETH</p>
-                      <button class="w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onclick={() => this.buyNft({ nft })}>Buy</button>
+                      <button class="w-full bg-yellow-500 text-black font-bold py-2 px-12 rounded" onclick={() => this.buyNft({ nft })}>Buy</button>
                     </div>
                   </div>
                 )
