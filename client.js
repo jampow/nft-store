@@ -6,9 +6,6 @@ import Web3Modal from 'web3modal'
 const context = Nullstack.start(Application);
 
 context.start = async function start() {
-  const { settings } = context
-  console.log(settings)
-  // context.ipfsClient = create(settings.ipfsAddress)
   context.ipfsClient = create('http://localhost:5001/api/v0')
   context.Web3Modal = Web3Modal
 }

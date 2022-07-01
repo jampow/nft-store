@@ -42,7 +42,6 @@ class List extends Nullstack {
   }
 
   async buyNft({ Web3Modal, nft }) {
-    console.log('buyNft')
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)

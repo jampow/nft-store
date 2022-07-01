@@ -1,5 +1,6 @@
 import Nullstack from 'nullstack';
-import Topbar from './components/topbar'
+import Topbar from '../components/topbar'
+import NFTS from '../components/nfts'
 
 class Home extends Nullstack {
 
@@ -8,20 +9,12 @@ class Home extends Nullstack {
     page.description = `Buy a NFT and help starving children`;
   }
 
-  renderLink({ children, href }) {
-    const link = href + '?ref=create-nullstack-app';
-    return (
-      <a href={link} target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
-    )
-  }
-
   render({ project }) {
     return (
-      <section>
+      <>
         <Topbar />
-      </section>
+        <NFTS />
+      </>
     )
   }
 
