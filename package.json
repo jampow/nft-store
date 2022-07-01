@@ -13,8 +13,8 @@
   "scripts": {
     "start": "npx nullstack start",
     "build": "npx nullstack build --mode=ssr",
-    "dev-node": "docker run -p 8545:8545 -p 1337:1337 trufflesuite/ganache-cli:latest --accounts 10 --debug",
-    "dev-ipfs": "docker run --rm -p 4001:4001 -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/go-ipfs:latest",
+    "test": "hardhat test",
+    "dev-node": "hardhat node",
     "dev-deploy-contracts": "hardhat run scripts/deploy.js --network localhost",
     "dev-tailwind": "tailwindcss -i ./src/Application.css -o ./public/output.css --watch"
   },
