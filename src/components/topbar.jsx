@@ -9,7 +9,7 @@ class Topbar extends Nullstack {
     }
     return (
       <li class='px-4'>
-        <a href={href} class={`${selectedClass}`}>{children}</a>
+        <a href={href} class={`${selectedClass} pb-2`}>{children}</a>
       </li>
     )
   }
