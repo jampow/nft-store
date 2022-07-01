@@ -1,5 +1,5 @@
 import Nullstack from 'nullstack'
-import Drop from '../assets/drop'
+import Fancybox from './fancybox'
 
 import { ethers } from 'ethers'
 import axios from 'axios'
@@ -43,32 +43,13 @@ class Nfts extends Nullstack {
     this.nfts = items
   }
 
-  renderNft({ data }) {
-    return (
-      <div class="border overflow-hidden p-2">
-        <img src={data.image} />
-        <div class="mt-2">
-          <p class="text-sm font-bold">{data.name}</p>
-          <div class="overflow-hidden">
-            <p class="text-gray-400 text-xs">{data.description}</p>
-          </div>
-          <p class="text-xs mt-2">Price</p>
-          <p class="text-sm font-bold text-white flex items-center">
-            <Drop class="inline-block mr-2" />
-            {data.price} ETH
-          </p>
-        </div>
-      </div>
-    )
-  }
-
   render({ filter = '' }) {
     return (
       <div class="grid grid-cols-4 gap-4 p-4 mt-2">
         {
           this.nfts
             .filter(nft => (nft.name.indexOf(filter) > -1 || nft.description.indexOf(filter) > -1 || nft.price.toString().indexOf(filter) > -1))
-            .map(nft => (<Nft data={nft} />))
+            .map(nft => (<Fancybox data={nft} />))
         }
       </div>
     )

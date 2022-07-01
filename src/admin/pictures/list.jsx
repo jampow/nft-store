@@ -1,6 +1,8 @@
 import Nullstack from 'nullstack';
+import Fancybox from '../../components/fancybox'
 import { ethers } from 'ethers'
 import axios from 'axios'
+
 
 import { nftAddress, nftMarketAddress } from '../../../config'
 
@@ -65,19 +67,9 @@ class List extends Nullstack {
             {
               this.nfts.map(nft => {
                 return (
-                  <div class="border shadow rounded-xl overflow-hidden">
-                    <img src={nft.image} />
-                    <div class="p-4">
-                      <p class="text-2xl font-semiboldy">{nft.name}</p>
-                      <div class="overflow-hidden">
-                        <p class="text-gray-400">{nft.description}</p>
-                      </div>
-                    </div>
-                    <div class="p-4 bg-black">
-                      <p class="text-2xl mb-4 font-bold text-white">{nft.price} ETH</p>
-                      <button class="w-full bg-yellow-500 text-black font-bold py-2 px-12 rounded" onclick={() => this.buyNft({ nft })}>Buy</button>
-                    </div>
-                  </div>
+                  <Fancybox data={nft}>
+                    <button class="w-full bg-yellow-500 text-black font-bold py-2 px-12 rounded" onclick={() => this.buyNft({ nft })}>Buy</button>
+                  </Fancybox>
                 )
               })
             }
