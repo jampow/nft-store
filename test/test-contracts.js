@@ -7,8 +7,12 @@ describe('NFT Market', function() {
   let marketAddress
   let nft
   let nftAddress
+  let owner
+  let buyerAddress
 
   beforeEach(async function() {
+    [owner, buyerAddress] = await ethers.getSigners()
+
     const Market = await ethers.getContractFactory('NFTMarket');
     market = await Market.deploy();
     await market.deployed();
@@ -18,6 +22,11 @@ describe('NFT Market', function() {
     nft = await NFT.deploy(marketAddress)
     await nft.deployed()
     nftAddress = nft.address
+  })
+
+  it.skip('should buy some taps', async function() {
+    const amount = '1000'
+    await market.connect(buyerAddress).buyTaps(amount)
   })
 
   it('Should create and execute sales', async function() {
@@ -32,42 +41,64 @@ describe('NFT Market', function() {
     await market.createMarketItem(nftAddress, 1, auctionPrice, { value: listingPrice })
     await market.createMarketItem(nftAddress, 2, auctionPrice, { value: listingPrice })
 
-    const [_, buyerAddress] = await ethers.getSigners()
+    let itemsBeforeSell = await market.fetchMarketItems()
+    expect(itemsBeforeSell.length).to.equal(2)
 
     await market.connect(buyerAddress).createMarketSale(nftAddress, 1, { value: auctionPrice })
 
     let items = await market.fetchMarketItems()
 
-    items = await Promise.all(
-      items.map(async i => {
-        const tokenUri = await nft.tokenURI(i.tokenId)
-        return {
-          price: i.price.toString(),
-          tokenId: i.tokenId.toString(),
-          seller: i.seller,
-          owner: i.owner,
-          tokenUri
-        }
-      })
-    )
+    expect(items.length).to.equal(1)
 
-    console.log('store items: ', items)
+    // items = await Promise.all(
+    //   items.map(async i => {
+    //     const tokenUri = await nft.tokenURI(i.tokenId)
+    //     return {
+    //       price: i.price.toString(),
+    //       tokenId: i.tokenId.toString(),
+    //       seller: i.seller,
+    //       owner: i.owner,
+    //       tokenUri
+    //     }
+    //   })
+    // )
+
+    // console.log('store items: ', items)
 
     const itemsBought = await market.connect(buyerAddress).fetchMyBoughtNFTs()
+    expect(itemsBought.length).to.equal(1)
 
-    const readableItemsBought = await Promise.all(
-      itemsBought.map(async i => {
-        const tokenUri = await nft.tokenURI(i.tokenId)
-        return {
-          price: i.price.toString(),
-          tokenId: i.tokenId.toString(),
-          seller: i.seller,
-          owner: i.owner,
-          tokenUri
-        }
-      })
-    )
+    // const readableItemsBought = await Promise.all(
+    //   itemsBought.map(async i => {
+    //     const tokenUri = await nft.tokenURI(i.tokenId)
+    //     return {
+    //       price: i.price.toString(),
+    //       tokenId: i.tokenId.toString(),
+    //       seller: i.seller,
+    //       owner: i.owner,
+    //       tokenUri
+    //     }
+    //   })
+    // )
 
-    console.log('items bought', readableItemsBought)
+    // console.log('items bought', readableItemsBought)
+
+    const nftsFromSeller = await market.connect(owner).fetchMySellingNFTs()
+    expect(nftsFromSeller.length).to.equal(1)
+
+    // const readableNftsFromSeller = await Promise.all(
+    //   nftsFromSeller.map(async i => {
+    //     const tokenUri = await nft.tokenURI(i.tokenId)
+    //     return {
+    //       price: i.price.toString(),
+    //       tokenId: i.tokenId.toString(),
+    //       seller: i.seller,
+    //       owner: i.owner,
+    //       tokenUri
+    //     }
+    //   })
+    // )
+
+    // console.log('items on sale from seller', readableNftsFromSeller)
   });
 });
