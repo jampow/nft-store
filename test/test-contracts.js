@@ -1,31 +1,40 @@
-const { ethers } = require("hardhat");
+const { ethers } = require('hardhat');
+const { expect } = require('chai')
 
-describe("NFT Market", function() {
-  it("Should create and execute sales", async function() {
-    const Market = await ethers.getContractFactory("NFTMarket");
-    const market = await Market.deploy();
+describe('NFT Market', function() {
+
+  let market
+  let marketAddress
+  let nft
+  let nftAddress
+
+  beforeEach(async function() {
+    const Market = await ethers.getContractFactory('NFTMarket');
+    market = await Market.deploy();
     await market.deployed();
-    const marketAddress = market.address
+    marketAddress = market.address
 
-    const NFT = await ethers.getContractFactory("NFT")
-    const nft = await NFT.deploy(marketAddress)
+    const NFT = await ethers.getContractFactory('NFT')
+    nft = await NFT.deploy(marketAddress)
     await nft.deployed()
-    const nftContractAddress = nft.address
+    nftAddress = nft.address
+  })
 
+  it('Should create and execute sales', async function() {
     let listingPrice = await market.getListingPrice()
     listingPrice = listingPrice.toString()
 
     const auctionPrice = ethers.utils.parseUnits('100', 'ether')
 
-    await nft.createToken('https://www.mytoken.com')
-    await nft.createToken('https://www.mytoken2.com')
+    await nft.createToken('https://www.mytoken.com/1')
+    await nft.createToken('https://www.mytoken.com/2')
 
-    await market.createMarketItem(nftContractAddress, 1, auctionPrice, { value: listingPrice })
-    await market.createMarketItem(nftContractAddress, 2, auctionPrice, { value: listingPrice })
+    await market.createMarketItem(nftAddress, 1, auctionPrice, { value: listingPrice })
+    await market.createMarketItem(nftAddress, 2, auctionPrice, { value: listingPrice })
 
     const [_, buyerAddress] = await ethers.getSigners()
 
-    await market.connect(buyerAddress).createMarketSale(nftContractAddress, 1, { value: auctionPrice })
+    await market.connect(buyerAddress).createMarketSale(nftAddress, 1, { value: auctionPrice })
 
     let items = await market.fetchMarketItems()
 
@@ -44,7 +53,7 @@ describe("NFT Market", function() {
 
     console.log('store items: ', items)
 
-    const itemsBought = await market.connect(buyerAddress).fetchMyNFTs()
+    const itemsBought = await market.connect(buyerAddress).fetchMyBoughtNFTs()
 
     const readableItemsBought = await Promise.all(
       itemsBought.map(async i => {
