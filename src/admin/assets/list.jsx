@@ -23,7 +23,7 @@ class List extends Nullstack {
 
     const tokenContract = new ethers.Contract(nftAddress, NFT.abi, provider)
     const marketContract = new ethers.Contract(nftMarketAddress, Market.abi, signer)
-    const data = await marketContract.fetchMyNFTs()
+    const data = await marketContract.fetchMyBoughtNFTs()
 
     const items = await Promise.all(
       data.map(async i => {

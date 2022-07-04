@@ -5,18 +5,28 @@ describe('NFT Market', function() {
 
   let market
   let marketAddress
+
+  let taps
+  let tapsAddress
+
   let nft
   let nftAddress
+
   let owner
-  let buyerAddress
+  let buyer
 
   beforeEach(async function() {
-    [owner, buyerAddress] = await ethers.getSigners()
+    [owner, buyer] = await ethers.getSigners()
 
     const Market = await ethers.getContractFactory('NFTMarket');
     market = await Market.deploy();
     await market.deployed();
     marketAddress = market.address
+
+    const TAPs = await ethers.getContractFactory('WetTaps')
+    taps = await TAPs.deploy()
+    await taps.deployed()
+    tapsAddress = taps.address
 
     const NFT = await ethers.getContractFactory('NFT')
     nft = await NFT.deploy(marketAddress)
@@ -24,9 +34,18 @@ describe('NFT Market', function() {
     nftAddress = nft.address
   })
 
+  it('should mint taps', async function() {
+    // const amount = ethers.utils.parseUnits('10', 'ether')
+    const amount = '1000000000000000000'
+    await taps.mint(owner.address, amount)
+
+    const balance = await taps.connect(owner).balanceOf(owner.address)
+    expect(balance.toString()).to.equal(amount)
+  })
+
   it.skip('should buy some taps', async function() {
     const amount = '1000'
-    await market.connect(buyerAddress).buyTaps(amount)
+    await taps.connect(buyer.address).buyTaps(amount)
   })
 
   it('Should create and execute sales', async function() {
@@ -44,7 +63,7 @@ describe('NFT Market', function() {
     let itemsBeforeSell = await market.fetchMarketItems()
     expect(itemsBeforeSell.length).to.equal(2)
 
-    await market.connect(buyerAddress).createMarketSale(nftAddress, 1, { value: auctionPrice })
+    await market.connect(buyer).createMarketSale(nftAddress, 1, { value: auctionPrice })
 
     let items = await market.fetchMarketItems()
 
@@ -65,7 +84,7 @@ describe('NFT Market', function() {
 
     // console.log('store items: ', items)
 
-    const itemsBought = await market.connect(buyerAddress).fetchMyBoughtNFTs()
+    const itemsBought = await market.connect(buyer).fetchMyBoughtNFTs()
     expect(itemsBought.length).to.equal(1)
 
     // const readableItemsBought = await Promise.all(
