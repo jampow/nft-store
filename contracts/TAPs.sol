@@ -5,16 +5,20 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol";
 
+import "hardhat/console.sol";
+
 /// @custom:security-contact gianpaulo@ae.studio
 contract WetTaps is ERC20, Ownable, ERC20FlashMint {
-    constructor() ERC20("WetTaps", "WTP") {}
+    address payable tokenOwner;
+    uint unitsOneEthCanBuy = 10;
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+    constructor() ERC20("WetTaps", "WTP") payable {
+      tokenOwner = payable(msg.sender);
     }
 
-    function buyTaps(uint256 amount) public {
-      
+    receive() external payable {
+        uint256 amount = msg.value * unitsOneEthCanBuy;
+        _mint(msg.sender, amount);
     }
 
 }

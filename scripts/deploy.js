@@ -7,7 +7,7 @@ async function main() {
   await nftMarket.deployed();
   console.log("nftMarket deployed to:", nftMarket.address);
 
-  const TAPs = await hre.ethers.getContractFactory("TAPs");
+  const TAPs = await hre.ethers.getContractFactory("WetTaps");
   const taps = await TAPs.deploy();
   await taps.deployed();
   console.log("taps deployed to:", taps.address);

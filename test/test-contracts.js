@@ -34,18 +34,18 @@ describe('NFT Market', function() {
     nftAddress = nft.address
   })
 
-  it('should mint taps', async function() {
-    // const amount = ethers.utils.parseUnits('10', 'ether')
-    const amount = '1000000000000000000'
-    await taps.mint(owner.address, amount)
+  it('should buy some taps', async function() {
+    const amount = ethers.utils.parseEther('1.0')
 
-    const balance = await taps.connect(owner).balanceOf(owner.address)
-    expect(balance.toString()).to.equal(amount)
-  })
+    const transaction = await buyer.sendTransaction({
+      to: taps.address,
+      value: amount
+    })
 
-  it.skip('should buy some taps', async function() {
-    const amount = '1000'
-    await taps.connect(buyer.address).buyTaps(amount)
+    const balance = await taps.balanceOf(buyer.address)
+    const parsedBalance = ethers.utils.formatUnits(balance, 'ether')
+
+    expect(parsedBalance).to.equal('10.0')
   })
 
   it('Should create and execute sales', async function() {
