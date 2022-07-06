@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol";
 import "hardhat/console.sol";
 
 /// @custom:security-contact gianpaulo@ae.studio
-contract WetTaps is ERC20, Ownable, ERC20FlashMint {
+contract WetTokens is ERC20, Ownable, ERC20FlashMint {
     address payable tokenOwner;
     uint unitsOneEthCanBuy = 10;
 

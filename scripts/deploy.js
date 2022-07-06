@@ -2,15 +2,15 @@ const hre = require("hardhat")
 const fs = require("fs")
 
 async function main() {
+  const WetTokens = await hre.ethers.getContractFactory("WetTokens");
+  const wetTokens = await WetTokens.deploy();
+  await wetTokens.deployed();
+  console.log("wetTokens deployed to:", wetTokens.address);
+
   const NFTMarket = await hre.ethers.getContractFactory("NFTMarket");
   const nftMarket = await NFTMarket.deploy();
-  await nftMarket.deployed();
+  await nftMarket.deployed(wetTokens.address);
   console.log("nftMarket deployed to:", nftMarket.address);
-
-  const TAPs = await hre.ethers.getContractFactory("WetTaps");
-  const taps = await TAPs.deploy();
-  await taps.deployed();
-  console.log("taps deployed to:", taps.address);
 
   const NFT = await hre.ethers.getContractFactory("NFT");
   const nft = await NFT.deploy(nftMarket.address);
@@ -20,7 +20,7 @@ async function main() {
   writeConfigFile({
     nftMarketAddress: nftMarket.address,
     nftAddress: nft.address,
-    tapsAddress: taps.address
+    tapsAddress: wetTokens.address
   })
 }
 

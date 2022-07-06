@@ -8,10 +8,10 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract NFT is ERC721URIStorage {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
-  address contractAddress;
+  address marketContractAddress;
 
   constructor(address marketplaceAddress) ERC721("WETokens", "WETT") {
-    contractAddress = marketplaceAddress;
+    marketContractAddress = marketplaceAddress;
   }
 
   function createToken(string memory tokenURI) public returns (uint) {
@@ -20,7 +20,7 @@ contract NFT is ERC721URIStorage {
 
     _mint(msg.sender, newItemId);
     _setTokenURI(newItemId, tokenURI);
-    setApprovalForAll(contractAddress, true);
+    setApprovalForAll(marketContractAddress, true);
     return newItemId;
   }
 }

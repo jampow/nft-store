@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+import "hardhat/console.sol";
 
 contract NFTMarket is ReentrancyGuard {
   using Counters for Counters.Counter;
@@ -13,8 +16,13 @@ contract NFTMarket is ReentrancyGuard {
   address payable owner;
   uint256 listingPrice = 0.025 ether;
 
-  constructor() {
+  address tokenContractAddress;
+  IERC20 wetToken;
+
+  constructor(address tokenAddress) {
     owner = payable(msg.sender);
+    tokenContractAddress = tokenAddress;
+    wetToken = IERC20(tokenAddress);
   }
 
   struct MarketItem {
@@ -77,6 +85,13 @@ contract NFTMarket is ReentrancyGuard {
     );
   }
 
+  function transferToken(address to, uint256 amount) public {
+    uint256 balance = wetToken.balanceOf(msg.sender);
+    require(amount <= balance, "balance is low");
+    wetToken.transfer(to, amount);
+    /* emit TransferSent(msg.sender, to, amount); */
+  }
+
   function createMarketSale(
     address nftContract,
     uint256 itemId
@@ -85,7 +100,8 @@ contract NFTMarket is ReentrancyGuard {
     uint tokenId = idToMarketItem[itemId].tokenId;
     require(msg.value == price, "Please submit the asing price in order to complete the purchase");
 
-    idToMarketItem[itemId].seller.transfer(msg.value);
+    wetToken.transferFrom(msg.sender, idToMarketItem[itemId].seller, msg.value);
+
     IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
     idToMarketItem[itemId].owner = payable(msg.sender);
     idToMarketItem[itemId].sold = true;
