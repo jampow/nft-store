@@ -12,7 +12,7 @@ contract WetTokens is ERC20, Ownable, ERC20FlashMint {
     address payable tokenOwner;
     uint unitsOneEthCanBuy = 10;
 
-    constructor() ERC20("WetTaps", "WTP") payable {
+    constructor() ERC20("WetTokens", "WTT") payable {
       tokenOwner = payable(msg.sender);
     }
 

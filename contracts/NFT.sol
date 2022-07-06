@@ -10,7 +10,7 @@ contract NFT is ERC721URIStorage {
   Counters.Counter private _tokenIds;
   address marketContractAddress;
 
-  constructor(address marketplaceAddress) ERC721("WETokens", "WETT") {
+  constructor(address marketplaceAddress) ERC721("WetNFT", "WTN") {
     marketContractAddress = marketplaceAddress;
   }
 
