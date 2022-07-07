@@ -58,8 +58,8 @@ describe('NFT Market', function() {
     await nft.createToken('https://www.mytoken.com/1')
     await nft.createToken('https://www.mytoken.com/2')
 
-    await market.createMarketItem(nftAddress, 1, auctionPrice, { value: listingPrice })
-    await market.createMarketItem(nftAddress, 2, auctionPrice, { value: listingPrice })
+    await market.createMarketItemOld(nftAddress, 1, 1, auctionPrice, { value: listingPrice })
+    await market.createMarketItemOld(nftAddress, 2, 1, auctionPrice, { value: listingPrice })
 
     let itemsBeforeSell = await market.fetchMarketItems()
     expect(itemsBeforeSell.length).to.equal(2)
@@ -79,7 +79,7 @@ describe('NFT Market', function() {
 
     // sell one item
     await wetTokens.connect(buyer).approve(marketAddress, auctionPrice)
-    await market.connect(buyer).createMarketSale(nftAddress, 1, { value: auctionPrice })
+    await market.connect(buyer).createMarketSale(nftAddress, 1, 1, { value: auctionPrice })
 
     // checks wettokens from buyer wallet
     const balanceAfterBuy = await wetTokens.balanceOf(buyer.address)
