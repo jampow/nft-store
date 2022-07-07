@@ -263,22 +263,22 @@ contract NFTMarket is ReentrancyGuard {
   /*   payable(owner).transfer(listingPrice); */
   /* } */
 
-  /* function fetchMarketItems() public view returns (MarketItem[] memory) { */
-  /*   uint itemCount = _itemsIds.current(); */
-  /*   uint unsoldItemCount = _itemsIds.current() - _itemsSold.current(); */
-  /*   uint currentIndex = 0; */
+  function fetchMarketItems() public view returns (MarketItem[] memory) {
+    uint currentIndex = 0;
+    uint itemsCount = marketItemsList.length;
 
-  /*   MarketItem[] memory items = new MarketItem[](unsoldItemCount); */
-  /*   for (uint i = 0; i < itemCount; i++) { */
-  /*     if (idToMarketItem[i + 1].owner == address(0)) { */
-  /*       uint currentId = idToMarketItem[i + 1].itemId; */
-  /*       MarketItem storage currentItem = idToMarketItem[currentId]; */
-  /*       items[currentIndex] = currentItem; */
-  /*       currentIndex += 1; */
-  /*     } */
-  /*   } */
-  /*   return items; */
-  /* } */
+    // FIXME: itemsCount as size of the array is wrong, maybe I should interate to count just the unsold items and create the array from the coorect size
+    MarketItem[] memory items = new MarketItem[](itemsCount);
+    for (uint i = 0; i < itemsCount; i++) {
+      MarketItem storage item = marketItemStructs[marketItemsList[i]];
+      if (item.owner == address(0)) {
+        uint currentId = item.itemId;
+        items[currentIndex] = item;
+        currentIndex += 1;
+      }
+    }
+    return items;
+  }
 
   /* function fetchMySellingNFTs() public view returns (MarketItem[] memory) { */
   /*   uint totalItemCount = _itemsIds.current(); */
